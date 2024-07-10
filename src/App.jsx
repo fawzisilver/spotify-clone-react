@@ -3,6 +3,7 @@
 //rfce
 import React from 'react'
 import Sidebar from './components/Sidebar.jsx'
+import Player from './components/Player.jsx'
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <div className='h-[90%] flex'>
         <Sidebar />
       </div>
+      <Player />
     </div>
   )
 }
