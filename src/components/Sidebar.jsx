@@ -26,7 +26,7 @@ const Sidebar = () => {
               <img className="w-5 cursor-pointer" src={assets.plus_icon}   />
             </div>
           </div>
-          {/* <div className='p-4 bg-[#242424] m-2 rounded font-semibold flex flex-col items-start justify-start gap-1 pl-7'> */}
+         
           <div className='p-4 bg-[#242424] m-2 rounded font-semibold flex flex-col items-start justify-start gap-1 pl-7'>
               <h1>Create your first playlist</h1>
               <p className='font-light'>It's easy we will help you</p>
