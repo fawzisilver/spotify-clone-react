@@ -10,4 +10,4 @@ function SongsItem({ name, image, desc, id}) {
   )
 }
 
-export default SongsItem
+export default SongsItem 
