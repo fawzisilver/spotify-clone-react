@@ -9,7 +9,7 @@ const DisplayAlbum = () => {
 
     const {id} = useParams()
     const albumData = albumsData[id];
-    console.log(albumData);
+    // console.log(albumData);
     
     
 
