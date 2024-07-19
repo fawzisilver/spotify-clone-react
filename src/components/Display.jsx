@@ -7,21 +7,21 @@ import { albumsData } from '../assets/assets'
 const Display = () => {
 
   const displayRef = useRef();
-  const location = useLocation()
-  console.log(location)
+  const location = useLocation();
+  console.log(`location testing :)`, location);
   const isAlbum = location.pathname.includes("album");
   const albumId = isAlbum ? location.pathname.slice(-1) : "";
   const bgColor = albumsData[Number(albumId)].bgColor;
 
 
   useEffect(()=>{
-    // if we're in album route then 
     if(isAlbum) {
-      displayRef.current.style.background = `linear-gradient(${bgColor}, #121212)`
+        displayRef.current.style.background = `linear-gradient(${bgColor}, #121212)`
     } else {
-      displayRef.current.style.background = `#121212`;
+      displayRef.current.style.background = `#121212`
     }
   })
+  
 
 
   return (
