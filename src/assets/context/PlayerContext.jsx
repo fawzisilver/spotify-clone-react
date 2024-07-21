@@ -1,18 +1,13 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
 export const PlayerContext = createContext();
 
 const PlayerContextProvider = (props) => {
+  const contextValue = {};
 
-    const contextValue = {
-         
-    }
-
-    return(
-        <PlayerContext.Provider value={contextValue}>
-            {props.children}
-        </PlayerContext.Provider>
-    )
-}
-
-export default PlayerContextProvider;
+  return (
+    <PlayerContext.Provider value={contextValue}>
+      {props.children}
+    </PlayerContext.Provider>
+  );
+};
