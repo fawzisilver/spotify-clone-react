@@ -8,8 +8,10 @@ const PlayerContextProvider = (props) => {
 	const audioRef = useRef();
 	const seekBg = useRef();
 	const seekBar = useRef();
-	// const seekBg = useRef();
-	// const seekBar = useRef();
+
+	
+
+
 
 	const [track, setTrack] = useState(songsData[0]);
 	const [playStatus, setPlayStatus] = useState(false);
@@ -23,18 +25,10 @@ const PlayerContextProvider = (props) => {
 			minute: 0,
 		},
 	})
-	// const [track, setTrack] = useState(songsData[0]);
-	// const [playStatus, setPlayStatus] = useState(false);
-	// const [time, setTime] = useState({
-	// 	currentTime: {
-	// 		second: 0,
-	// 		minute: 0,
-	// 	},
-	// 	totalTime: {
-	// 		second: 0,
-	// 		minute: 0,
-	// 	},
-	// });
+
+
+
+
 
 	//play() and pause() are built-in methods for <audio> which we can use to manipulate/interact thru ref
 	const play = () => {
@@ -53,9 +47,17 @@ const PlayerContextProvider = (props) => {
 		
 	}
 
+
+	const playWithId = async (id) => {
+		await setTrack(songsData[id]);
+		await audioRef.current.play();
+		setPlayStatus(true);
+	}
+
 	useEffect(()=>{
 		setTimeout(()=>{
 			audioRef.current.ontimeupdate = () => {
+				seekBar.current.style.width = (Math.floor(audioRef.current.currentTime/audioRef.current.duration*100))+"%"
 				setTime({
 					currentTime: {
 						second: Math.floor(audioRef.current.currentTime % 60),
@@ -70,8 +72,6 @@ const PlayerContextProvider = (props) => {
 		},1000)
 	},[audioRef])
 
-	
-
 	const contextValue = {
 		audioRef,    //audioRef: audioRef, (shorthand is w/o ":")
 		seekBg,
@@ -83,8 +83,11 @@ const PlayerContextProvider = (props) => {
 		play,
 		pause,
 		time,
-		setTime 
+		setTime,
+		playWithId
 	};
+
+
 
 	return (
 		<PlayerContext.Provider value={contextValue}>
