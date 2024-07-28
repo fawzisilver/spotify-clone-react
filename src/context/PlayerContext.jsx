@@ -9,9 +9,6 @@ const PlayerContextProvider = (props) => {
 	const seekBg = useRef();
 	const seekBar = useRef();
 
-	
-
-
 
 	const [track, setTrack] = useState(songsData[0]);
 	const [playStatus, setPlayStatus] = useState(false);
@@ -27,16 +24,12 @@ const PlayerContextProvider = (props) => {
 	})
 
 
-
-
-
 	//play() and pause() are built-in methods for <audio> which we can use to manipulate/interact thru ref
 	const play = () => {
 		if(audioRef.current) {
 			audioRef.current.play();
 			setPlayStatus(true);
 		}
-		
 	}
 
 	const pause = () => {
@@ -44,7 +37,6 @@ const PlayerContextProvider = (props) => {
 			audioRef.current.pause();
 			setPlayStatus(false)
 		}
-		
 	}
 
 
@@ -52,6 +44,22 @@ const PlayerContextProvider = (props) => {
 		await setTrack(songsData[id]);
 		await audioRef.current.play();
 		setPlayStatus(true);
+	}
+
+	const previous = async () => {
+		if (track.id>0) {
+			await setTrack(songsData[track.id-1]);
+			await audioRef.current.play();
+			setPlayStatus(true);
+		}
+	}
+
+	const next = async () => {
+		if (track.id< songsData.length-1) {
+			await setTrack(songsData[track.id+1]);
+			await audioRef.current.play();
+			setPlayStatus(true);
+		}
 	}
 
 	useEffect(()=>{
@@ -74,17 +82,14 @@ const PlayerContextProvider = (props) => {
 
 	const contextValue = {
 		audioRef,    //audioRef: audioRef, (shorthand is w/o ":")
-		seekBg,
-		seekBar,
-		track,
-		setTrack,
-		playStatus,
-		setPlayStatus,
+		seekBg, seekBar,
+		track, setTrack,
+		playStatus, setPlayStatus,
 		play,
 		pause,
-		time,
-		setTime,
-		playWithId
+		time, setTime,
+		playWithId,
+		previous, next
 	};
 
 
