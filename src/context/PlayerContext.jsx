@@ -8,8 +8,7 @@ const PlayerContextProvider = (props) => {
 	const audioRef = useRef();
 	const seekBg = useRef();
 	const seekBar = useRef();
-	// const seekBg = useRef();
-	// const seekBar = useRef();
+
 
 	const [track, setTrack] = useState(songsData[0]);
 	const [playStatus, setPlayStatus] = useState(false);
@@ -23,18 +22,7 @@ const PlayerContextProvider = (props) => {
 			minute: 0,
 		},
 	})
-	// const [track, setTrack] = useState(songsData[0]);
-	// const [playStatus, setPlayStatus] = useState(false);
-	// const [time, setTime] = useState({
-	// 	currentTime: {
-	// 		second: 0,
-	// 		minute: 0,
-	// 	},
-	// 	totalTime: {
-	// 		second: 0,
-	// 		minute: 0,
-	// 	},
-	// });
+
 
 	//play() and pause() are built-in methods for <audio> which we can use to manipulate/interact thru ref
 	const play = () => {
@@ -42,7 +30,6 @@ const PlayerContextProvider = (props) => {
 			audioRef.current.play();
 			setPlayStatus(true);
 		}
-		
 	}
 
 	const pause = () => {
@@ -50,12 +37,35 @@ const PlayerContextProvider = (props) => {
 			audioRef.current.pause();
 			setPlayStatus(false)
 		}
-		
+	}
+
+
+	const playWithId = async (id) => {
+		await setTrack(songsData[id]);
+		await audioRef.current.play();
+		setPlayStatus(true);
+	}
+
+	const previous = async () => {
+		if (track.id>0) {
+			await setTrack(songsData[track.id-1]);
+			await audioRef.current.play();
+			setPlayStatus(true);
+		}
+	}
+
+	const next = async () => {
+		if (track.id< songsData.length-1) {
+			await setTrack(songsData[track.id+1]);
+			await audioRef.current.play();
+			setPlayStatus(true);
+		}
 	}
 
 	useEffect(()=>{
 		setTimeout(()=>{
 			audioRef.current.ontimeupdate = () => {
+				seekBar.current.style.width = (Math.floor(audioRef.current.currentTime/audioRef.current.duration*100))+"%"
 				setTime({
 					currentTime: {
 						second: Math.floor(audioRef.current.currentTime % 60),
@@ -70,21 +80,19 @@ const PlayerContextProvider = (props) => {
 		},1000)
 	},[audioRef])
 
-	
-
 	const contextValue = {
 		audioRef,    //audioRef: audioRef, (shorthand is w/o ":")
-		seekBg,
-		seekBar,
-		track,
-		setTrack,
-		playStatus,
-		setPlayStatus,
+		seekBg, seekBar,
+		track, setTrack,
+		playStatus, setPlayStatus,
 		play,
 		pause,
-		time,
-		setTime 
+		time, setTime,
+		playWithId,
+		previous, next
 	};
+
+
 
 	return (
 		<PlayerContext.Provider value={contextValue}>
